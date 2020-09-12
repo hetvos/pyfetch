@@ -1,6 +1,5 @@
 import distro
 import psutil
-import wmctrl
 ram = psutil.virtual_memory().total
 swap = psutil.swap_memory().total
 
@@ -14,20 +13,21 @@ def to_humanreadable(bytes):
 
 colors = {
 	"arch":"\u001b[36;1m",
-	"manjaro":"\u001b[32;1m"
+	"manjaro":"\u001b[32;1m",
+	"gentoo":"\u001b[35;1m"
 }
 
 logos = {
-	"arch":["  /\   "," /  \  ","/_/\_\ "],
-	"manjaro":["|־־ | ","| | | ","| | | "]
+	"arch":["  /\   ",
+		" /' \  ",
+		"/_/\_\ "],
+	"manjaro":["|־־ | ",
+		   "| | | ",
+		   "| | | "],
+	"gentoo":["  ---  ",
+		  " \ 0 \ ",
+		  " /__/  "]
 }
-
-def get_longest_line():
-    longestlength = 0
-    for line in logos[distro.id()]:
-        if len(line) > longestlength:
-            longestlength = len(line)
-    return longestlength
 
 def get_color():
 	try:
@@ -38,29 +38,13 @@ def get_color():
 
 reset = "\u001b[0m"
 
-def get_wm(name):
-    wm = wmctrl.os.environ.get('DESKTOP_SESSION')
-    if "/" in wm:
-        wm = wm.split("/")[len(wm.split("/"))-1]
-        isde="de"
-        if wm in ["openbox"]:
-            isde="wm"
-    else:
-        isde = "wm"
-
-    if name == True:
-        return wm
-    else:
-        return isde
-
 def print_info():
-    try:
-        logo = logos[distro.id()]
-    except:
-        logo = ["  ??   ","?????? ","  ??   "]
-    print(f" {get_color()}{logo[0]}{reset} | {get_color()}os{reset}   {distro.id()}")
-    print(f" {get_color()}{logo[1]}{reset} | {get_color()}ram{reset}  {to_humanreadable(ram)}")
-    print(f" {get_color()}{logo[2]}{reset} | {get_color()}swap{reset} {to_humanreadable(swap)}")
-    print(f" {' '*get_longest_line()} | {get_color()}{get_wm(False)}{reset}   {get_wm(True)}")
+	try:
+		logo = logos[distro.id()]
+	except:
+		logo = ["  ??   ","?????? ","  ??   "]
+	print(f" {get_color()}{logo[0]}{reset} | {get_color()}os{reset}   {distro.id()}")
+	print(f" {get_color()}{logo[1]}{reset} | {get_color()}ram{reset}  {to_humanreadable(ram)}")
+	print(f" {get_color()}{logo[2]}{reset} | {get_color()}swap{reset} {to_humanreadable(swap)}")
 
 print_info()
