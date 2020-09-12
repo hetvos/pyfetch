@@ -1,3 +1,2 @@
 distro
 psutil
-wmctrl-python3
