@@ -5,31 +5,35 @@ swap = psutil.swap_memory().total
 
 def to_humanreadable(bytes):
 	unitIndex = 0
-	units = ["B","KB","MB","GB","TB"]
-	while 1000 <= bytes:
-		bytes /= 1000
+	units = ["B","KiB","MiB","GiB","TiB"]
+	while 1024 <= bytes:
+		bytes /= 1024
 		unitIndex += 1
 	return f"{round(bytes)}{units[unitIndex]}"
 
 colors = {
 	"arch":"\u001b[36;1m",
 	"manjaro":"\u001b[32;1m",
-	"gentoo":"\u001b[35;1m"
+	"gentoo":"\u001b[35;1m",
+	"fedora":"\u001b[34;1m",
 }
 
 logos = {
 	"arch":["  /\   ",
-		" /  \  ",
-		"/_/\_\ "],
+			" /  \  ",
+			"/_/\_\ "],
 	"manjaro":["|־־ | ",
-		   "| | | ",
-		   "| | | "],
+		   	   "| | | ",
+			   "| | | "],
 	"gentoo":["  ---  ",
-		  " \ 0 \ ",
-		  " /__/  "],
-        "ubuntu":["/----\\",
-                  "| () |",
-                  "\----/"]
+		  	  " \ 0 \ ",
+		  	  " /__/  "],
+	"ubuntu":["/----\\",
+			  "| () |",
+			  "\----/"],
+	"fedora":["  ,--",
+			  ",-|- ",
+			  "\_|  "]
 }
 
 def get_color():
