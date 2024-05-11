@@ -19,21 +19,26 @@ colors = {
 }
 
 logos = {
-	"arch":["  /\   ",
-			" /  \  ",
-			"/_/\_\ "],
+	"arch":["  /\\   ",
+			" /  \\  ",
+			"/_/\\_\\ "],
 	"manjaro":["|־־ | ",
 		   	   "| | | ",
 			   "| | | "],
 	"gentoo":["  ---  ",
-		  	  " \ 0 \ ",
+		  	  " \\ 0 \\ ",
 		  	  " /__/  "],
 	"ubuntu":["/----\\",
 			  "| () |",
-			  "\----/"],
+			  "\\----/"],
 	"fedora":["  ,--",
 			  ",-|- ",
-			  "\_|  "]
+			  "\\_|  "],
+	"darwin":[" _/_ ", "|   |", "`---´"],
+}
+
+names = {
+	"darwin": "macos",
 }
 
 def get_color():
@@ -43,15 +48,25 @@ def get_color():
 		color = "\u001b[37m"
 	return "\u001b[1m"+color
 
+def get_name():
+	try:
+		return names[distro.id()]
+	except:
+		return distro.id()
+
+def get_logo():
+	try:
+		return logos[distro.id()]
+	except:
+		return ["  ??   ","?????? ","  ??   "]
+
 reset = "\u001b[0m"
 
 def print_info():
-	try:
-		logo = logos[distro.id()]
-	except:
-		logo = ["  ??   ","?????? ","  ??   "]
-	print(f" {get_color()}{logo[0]}{reset} | {get_color()}os{reset}   {distro.id()}")
-	print(f" {get_color()}{logo[1]}{reset} | {get_color()}ram{reset}  {to_humanreadable(ram)}")
-	print(f" {get_color()}{logo[2]}{reset} | {get_color()}swap{reset} {to_humanreadable(swap)}")
+	logo = get_logo()
+	color = get_color()
+	print(f" {color}{logo[0]}{reset} | {get_color()}os{reset}   {get_name()}")
+	print(f" {color}{logo[1]}{reset} | {get_color()}ram{reset}  {to_humanreadable(ram)}")
+	print(f" {color}{logo[2]}{reset} | {get_color()}swap{reset} {to_humanreadable(swap)}")
 
 print_info()
